@@ -1,0 +1,29 @@
+services:
+  consolidated:
+    build: ./consolidated
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+
+  service_1:
+    build: ./granular/service_1
+    ports:
+      - "8001:8000"
+    environment:
+      - PORT=8000
+
+  service_2:
+    build: ./granular/service_2
+    ports:
+      - "8002:8000"
+    environment:
+      - PORT=8000
+
+  locust:
+    image: docker.io/locustio/locust
+    ports:
+      - "8089:8089"
+    volumes:
+      - ./locust:/mnt/locust
+    command: -f /mnt/locust/locustfile.py
